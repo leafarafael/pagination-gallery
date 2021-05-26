@@ -7,7 +7,7 @@ const getNextGallery = async () => {
     const ref = db.collection('gallery')
         .orderBy('title')
         .startAfter(latestDoc || 0)
-        .limit(4);
+        .limit(3);
 
     const data = await ref.get();
 
@@ -40,3 +40,12 @@ const handleClick = () => {
 }
 
 loadMore.addEventListener('click', handleClick);
+
+const handleScroll = () => {
+    let triggerHeight = container.scrollTop + container.offsetHeight;
+    if (triggerHeight >= container.scrollHeight) {
+      getNextReviews(latestDoc);
+    }
+  }
+  
+  container.addEventListener('scroll', handleScroll);
